@@ -1,4 +1,4 @@
-package services;
+package services.itf;
 
 import models.Booking;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BookingService extends Service {
 
-    void addBooking(Booking booking);
+    void add(Booking booking);
 
-    List<Booking> displayBooking();
+    List<Booking> display();
 }

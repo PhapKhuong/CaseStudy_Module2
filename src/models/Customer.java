@@ -1,17 +1,15 @@
 package models;
 
-import java.time.LocalDate;
-
 public class Customer extends Person {
     private int customerID;
-    private CustomerType customerType;
+    private String customerType;
     private String address;
 
     public Customer() {
     }
 
-    public Customer(String name, LocalDate dateOfBirth, boolean gender, String idCard, String phone, String email,
-                    int customerID, CustomerType customerType, String address) {
+    public Customer(String name, String dateOfBirth, String gender, String idCard, String phone, String email,
+                    int customerID, String customerType, String address) {
         super(name, dateOfBirth, gender, idCard, phone, email);
         this.customerID = customerID;
         this.customerType = customerType;
@@ -26,11 +24,11 @@ public class Customer extends Person {
         this.customerID = customerID;
     }
 
-    public CustomerType getCustomerType() {
+    public String getCustomerType() {
         return customerType;
     }
 
-    public void setCustomerType(CustomerType customerType) {
+    public void setCustomerType(String customerType) {
         this.customerType = customerType;
     }
 
@@ -40,6 +38,10 @@ public class Customer extends Person {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void showNotification() {
+        System.out.println("This is the list of customers!");
     }
 
     @Override

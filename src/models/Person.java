@@ -1,11 +1,9 @@
 package models;
 
-import java.time.LocalDate;
-
 public abstract class Person {
     private String name;
-    private LocalDate dateOfBirth;
-    private boolean gender;
+    private String dateOfBirth;
+    private String gender;
     private String idCard;
     private String phone;
     private String email;
@@ -13,7 +11,7 @@ public abstract class Person {
     public Person() {
     }
 
-    public Person(String name, LocalDate dateOfBirth, boolean gender, String idCard, String phone, String email) {
+    public Person(String name, String dateOfBirth, String gender, String idCard, String phone, String email) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
@@ -30,19 +28,19 @@ public abstract class Person {
         this.name = name;
     }
 
-    public LocalDate getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public boolean isGender() {
+    public String isGender() {
         return gender;
     }
 
-    public void setGender(boolean gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -69,6 +67,8 @@ public abstract class Person {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    abstract void showNotification();
 
     @Override
     public String toString() {

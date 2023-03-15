@@ -6,7 +6,7 @@ public class Room extends Facility {
     public Room() {
     }
 
-    public Room(String serviceName, float usableArea, long unitPrice, int capacity, RentalType rentalType,
+    public Room(String serviceName, float usableArea, long unitPrice, int capacity, String rentalType,
                 String freeService) {
         super(serviceName, usableArea, unitPrice, capacity, rentalType);
         this.freeService = freeService;
@@ -18,6 +18,10 @@ public class Room extends Facility {
 
     public void setFreeService(String freeService) {
         this.freeService = freeService;
+    }
+
+    public void showPopUp() {
+        System.out.println("Welcome to you our room chain!");
     }
 
     @Override

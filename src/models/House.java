@@ -7,7 +7,7 @@ public class House extends Facility {
     public House() {
     }
 
-    public House(String serviceName, float usableArea, long unitPrice, int capacity, RentalType rentalType,
+    public House(String serviceName, float usableArea, long unitPrice, int capacity, String rentalType,
                  String houseRoomStandard, int numOfHouseFloor) {
         super(serviceName, usableArea, unitPrice, capacity, rentalType);
         this.houseRoomStandard = houseRoomStandard;
@@ -28,6 +28,10 @@ public class House extends Facility {
 
     public void setNumOfHouseFloor(int numOfHouseFloor) {
         this.numOfHouseFloor = numOfHouseFloor;
+    }
+
+    public void showPopUp() {
+        System.out.println("Welcome to you our housing chain!");
     }
 
     @Override

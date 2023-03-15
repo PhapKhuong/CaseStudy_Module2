@@ -8,7 +8,7 @@ public class Villa extends Facility {
     public Villa() {
     }
 
-    public Villa(String serviceName, float usableArea, long unitPrice, int capacity, RentalType rentalType,
+    public Villa(String serviceName, float usableArea, long unitPrice, int capacity, String rentalType,
                  String villaRoomStandard, float poolArea, int numOfVillaFloor) {
         super(serviceName, usableArea, unitPrice, capacity, rentalType);
         this.villaRoomStandard = villaRoomStandard;
@@ -38,6 +38,10 @@ public class Villa extends Facility {
 
     public void setNumOfVillaFloor(int numOfVillaFloor) {
         this.numOfVillaFloor = numOfVillaFloor;
+    }
+
+    public void showPopUp() {
+        System.out.println("Welcome to you our villa chain!");
     }
 
     @Override

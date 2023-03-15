@@ -4,15 +4,15 @@ import java.time.LocalDate;
 
 public class Employee extends Person{
     private int employeeID;
-    private Level level;
+    private String level;
     private String position;
     private long salary;
 
     public Employee(){
     }
 
-    public Employee(String name, LocalDate dateOfBirth, boolean gender, String idCard, String phone, String email,
-                    int employeeID, Level level, String position, long salary) {
+    public Employee(String name, String dateOfBirth, String gender, String idCard, String phone, String email,
+                    int employeeID, String level, String position, long salary) {
         super(name, dateOfBirth, gender, idCard, phone, email);
         this.employeeID = employeeID;
         this.level = level;
@@ -28,11 +28,11 @@ public class Employee extends Person{
         this.employeeID = employeeID;
     }
 
-    public Level getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(Level level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 
@@ -50,6 +50,10 @@ public class Employee extends Person{
 
     public void setSalary(long salary) {
         this.salary = salary;
+    }
+
+    public void showNotification() {
+        System.out.println("This is the list of employees!");
     }
 
     @Override

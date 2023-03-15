@@ -5,12 +5,12 @@ public abstract class Facility {
     private float usableArea;
     private long unitPrice;
     private int capacity;
-    private RentalType rentalType;
+    private String rentalType;
 
     public Facility() {
     }
 
-    public Facility(String serviceName, float usableArea, long unitPrice, int capacity, RentalType rentalType) {
+    public Facility(String serviceName, float usableArea, long unitPrice, int capacity, String rentalType) {
         this.serviceName = serviceName;
         this.usableArea = usableArea;
         this.unitPrice = unitPrice;
@@ -50,13 +50,15 @@ public abstract class Facility {
         this.capacity = capacity;
     }
 
-    public RentalType getRentalType() {
+    public String getRentalType() {
         return rentalType;
     }
 
-    public void setRentalType(RentalType rentalType) {
+    public void setRentalType(String rentalType) {
         this.rentalType = rentalType;
     }
+
+    abstract void showPopUp();
 
     @Override
     public String toString() {
