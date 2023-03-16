@@ -1,8 +1,12 @@
 package controllers;
 
+import libs.MyRegex;
+import utils.MyUtil;
 import models.*;
+import services.impl.BookingServiceImpl;
 import services.impl.CustomerServiceImpl;
 import services.impl.FacilityServiceImpl;
+import services.itf.BookingService;
 import services.itf.CustomerService;
 import services.itf.EmployeeService;
 import services.impl.EmployeeServiceImpl;
@@ -45,6 +49,10 @@ public class FuramaController {
             facilityNames.add(key.getServiceName());
         }
     }
+
+    // BOOKING
+    public static BookingService bookingService = new BookingServiceImpl();
+    public static Set<Booking> bookings = bookingService.display();
 
 
     public static void main(String[] args) {
@@ -382,10 +390,14 @@ public class FuramaController {
     // CÁC METHOD ĐƯỢC TRIỂN KHAI TỪ ADD FACILITY
     private static void addVilla() {
         String serviceName;
+        boolean firstTest;
+        boolean secondTest;
         do {
             System.out.println("Enter facility name");
             serviceName = scanner.nextLine();
-        } while (MyUtil.checkName(serviceName, facilityNames));
+            firstTest = MyUtil.checkName(serviceName, facilityNames);
+            secondTest = serviceName.matches(MyRegex.REGEX_VILLA_NAME);
+        } while (firstTest && secondTest);
 
         System.out.println("Enter usable area");
         float usageArea = Float.parseFloat(scanner.nextLine());
@@ -412,15 +424,20 @@ public class FuramaController {
                 serviceName, usageArea, unitPrice, capacity, rentalType, standard, poolArea, numberOfFloor);
 
         facilityService.add(villa);
+        facilities = facilityService.display();
         facilityNames.add(villa.getServiceName());
     }
 
     private static void addHouse() {
         String serviceName;
+        boolean firstTest;
+        boolean secondTest;
         do {
             System.out.println("Enter facility name");
             serviceName = scanner.nextLine();
-        } while (MyUtil.checkName(serviceName, facilityNames));
+            firstTest = MyUtil.checkName(serviceName, facilityNames);
+            secondTest = serviceName.matches(MyRegex.REGEX_HOUSE_NAME);
+        } while (firstTest && secondTest);
 
         System.out.println("Enter usable area");
         float usageArea = Float.parseFloat(scanner.nextLine());
@@ -444,15 +461,20 @@ public class FuramaController {
                 serviceName, usageArea, unitPrice, capacity, rentalType, standard, numberOfFloor);
 
         facilityService.add(house);
+        facilities = facilityService.display();
         facilityNames.add(house.getServiceName());
     }
 
     private static void addRoom() {
         String serviceName;
+        boolean firstTest;
+        boolean secondTest;
         do {
             System.out.println("Enter facility name");
             serviceName = scanner.nextLine();
-        } while (MyUtil.checkName(serviceName, facilityNames));
+            firstTest = MyUtil.checkName(serviceName, facilityNames);
+            secondTest = serviceName.matches(MyRegex.REGEX_ROOM_NAME);
+        } while (firstTest && secondTest);
 
         System.out.println("Enter usable area");
         float usageArea = Float.parseFloat(scanner.nextLine());
@@ -473,6 +495,7 @@ public class FuramaController {
                 serviceName, usageArea, unitPrice, capacity, rentalType, freeService);
 
         facilityService.add(room);
+        facilities = facilityService.display();
         facilityNames.add(room.getServiceName());
     }
 
@@ -487,7 +510,6 @@ public class FuramaController {
             }
         }
     }
-
 
     // METHOD HIỂN THỊ MENU BOOKING
     private static void displayBookingMenu() {
@@ -513,6 +535,7 @@ public class FuramaController {
             switch (selectBookingService) {
                 case 1:
                     addBooking();
+
                     break;
                 case 2:
                     displayBooking();
@@ -534,6 +557,41 @@ public class FuramaController {
 
     // CÁC METHOD ĐƯỢC GỌI TỪ MENU FACILITY
     private static void addBooking() {
+        int customerID;
+        do {
+            customerID = MyUtil.selectID(customers);
+        }
+        while (customerID == -1);
+
+        System.out.println("Enter booking ID");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Enter begin date");
+        String beginDate = scanner.nextLine();
+
+        System.out.println("Enter finish date");
+        String finishDate = scanner.nextLine();
+
+        String serviceName;
+        do {
+            serviceName = MyUtil.SelectServiceName(facilityNames);
+        } while (serviceName == null);
+
+        System.out.println("Enter service type");
+        String serviceType = scanner.nextLine();
+
+        // Update Map Facility
+        for (Map.Entry<Facility, Integer> entry : facilities.entrySet()) {
+            if(entry.getKey().getServiceName().equals(serviceName)) {
+                int value = entry.getValue() + 1;
+                facilityService.update(entry.getKey(), value);
+                facilityService.display();
+                break;
+            }
+        }
+
+        Booking booking = new Booking(id, beginDate, finishDate, customerID, serviceName, serviceType);
+//        bookingService.add(booking);
     }
 
     private static void displayBooking() {

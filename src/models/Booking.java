@@ -1,23 +1,22 @@
 package models;
 
-import java.time.LocalDate;
-
 public class Booking {
-    private int bookingID;          // Mã Booking
-    private LocalDate beginDate;    // Ngày bắt đầu
-    private LocalDate finishDate;   // Ngày kết thúc
-    private int bookingCustomerID;  // Mã khách hàng
-    private String serviceName;     // Tên dịch vụ
-    private String serviceType;     // Loại dịch vụ
+    private int bookingID;
+    private String beginDate;
+    private String finishDate;
+    private int customerID;
+    private String serviceName;
+    private String serviceType;
 
-    public Booking () {}
+    public Booking() {
+    }
 
-    public Booking (int bookingID, LocalDate beginDate, LocalDate finishDate, int bookingCustomerID,
-                    String serviceName, String serviceType) {
+    public Booking(int bookingID, String beginDate, String finishDate, int customerID,
+                   String serviceName, String serviceType) {
         this.bookingID = bookingID;
         this.beginDate = beginDate;
         this.finishDate = finishDate;
-        this.bookingCustomerID = bookingCustomerID;
+        this.customerID = customerID;
         this.serviceName = serviceName;
         this.serviceType = serviceType;
     }
@@ -30,28 +29,28 @@ public class Booking {
         this.bookingID = bookingID;
     }
 
-    public LocalDate getBeginDate() {
+    public String getBeginDate() {
         return beginDate;
     }
 
-    public void setBeginDate(LocalDate beginDate) {
+    public void setBeginDate(String beginDate) {
         this.beginDate = beginDate;
     }
 
-    public LocalDate getFinishDate() {
+    public String getFinishDate() {
         return finishDate;
     }
 
-    public void setFinishDate(LocalDate finishDate) {
+    public void setFinishDate(String finishDate) {
         this.finishDate = finishDate;
     }
 
-    public int getBookingCustomerID() {
-        return bookingCustomerID;
+    public int getCustomerID() {
+        return customerID;
     }
 
-    public void setBookingCustomerID(int bookingCustomerID) {
-        this.bookingCustomerID = bookingCustomerID;
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
     }
 
     public String getServiceName() {
@@ -76,7 +75,7 @@ public class Booking {
                 "bookingID=" + bookingID +
                 ", beginDate=" + beginDate +
                 ", finishDate=" + finishDate +
-                ", bookingCustomerID=" + bookingCustomerID +
+                ", customerID=" + customerID +
                 ", serviceName='" + serviceName + '\'' +
                 ", serviceType='" + serviceType + '\'' +
                 '}';

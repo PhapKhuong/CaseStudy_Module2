@@ -10,5 +10,7 @@ public interface FacilityService extends Service {
 
     void add(Facility facility);
 
+    void update(Facility facility, int value);
+
     Map<Facility,Integer> displayMaintenance();
 }

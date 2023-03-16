@@ -7,7 +7,6 @@ import models.Villa;
 import services.itf.FacilityService;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FacilityServiceImpl implements FacilityService {
@@ -32,6 +31,10 @@ public class FacilityServiceImpl implements FacilityService {
     @Override
     public void add(Facility facility) {
         facilityMap.put(facility, 0);
+    }
+
+    public void update(Facility facility, int value){
+        facilityMap.put(facility,value);
     }
 
     @Override

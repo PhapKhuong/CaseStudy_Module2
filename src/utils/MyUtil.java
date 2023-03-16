@@ -1,9 +1,11 @@
-package controllers;
+package utils;
 
 import models.Customer;
 import models.Employee;
+import models.Facility;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class MyUtil {
@@ -275,5 +277,86 @@ public class MyUtil {
                     return "Director";
             }
         } while (true);
+    }
+
+    public static int selectID(List<Customer> customers) {
+        int select;
+        int exit = 0;
+        boolean test;
+
+        System.out.println("List of customer:");
+        for (Customer customer : customers) {
+            System.out.println(customer);
+        }
+
+        do {
+            test = false;
+            System.out.println("Enter customer ID");
+            select = Integer.parseInt(scanner.nextLine());
+            for (Customer customer : customers) {
+                if (customer.getCustomerID() == select) {
+                    System.out.println(customer);
+                    test = true;
+                    break;
+                }
+            }
+            if (!test) {
+                System.out.println("Customer is not exist");
+                select = -1;
+            }
+            do {
+                System.out.println("Do you finish?");
+                System.out.println("1. OK");
+                System.out.println("2. Select again");
+                exit = Integer.parseInt(scanner.nextLine());
+            } while (exit != 1 && exit != 2);
+        } while (exit == 2);
+
+        return select;
+    }
+
+    public static String SelectServiceName(List<String> names) {
+        String select;
+        int exit = 0;
+        boolean test;
+
+        System.out.println("List of service:");
+        for (String name : names) {
+            System.out.println(name);
+        }
+
+        do {
+            test = false;
+            System.out.println("Enter service name");
+            select = scanner.nextLine();
+            for (String name : names) {
+                if (name.equals(select)) {
+                    System.out.println("Service is selected: " + name);
+                    test = true;
+                    break;
+                }
+            }
+            if (!test) {
+                System.out.println("Facility is not exist");
+                select = null;
+            }
+            do {
+                System.out.println("Do you finish?");
+                System.out.println("1. OK");
+                System.out.println("2. Select again");
+                exit = Integer.parseInt(scanner.nextLine());
+            } while (exit != 1 && exit != 2);
+        } while (exit == 2);
+
+        return select;
+    }
+
+    public static Facility getFacility(String name, Map<Facility, Integer> facilities) {
+        for (Facility key : facilities.keySet()) {
+            if (key.getServiceName().equals(name)) {
+                return key;
+            }
+        }
+        return null;
     }
 }
