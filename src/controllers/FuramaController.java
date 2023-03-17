@@ -43,10 +43,15 @@ public class FuramaController {
     public static FacilityService facilityService = new FacilityServiceImpl();
     public static Map<Facility, Integer> facilities = facilityService.display();
     public static List<String> facilityNames = new ArrayList<>();
+    public static List<String> facilityIDs = new ArrayList<>();
 
     static {
         for (Facility key : facilities.keySet()) {
             facilityNames.add(key.getServiceName());
+        }
+
+        for (Facility key : facilities.keySet()) {
+            facilityIDs.add(key.getServiceID());
         }
     }
 
@@ -389,15 +394,23 @@ public class FuramaController {
 
     // CÁC METHOD ĐƯỢC TRIỂN KHAI TỪ ADD FACILITY
     private static void addVilla() {
-        String serviceName;
+        String serviceID;
         boolean firstTest;
         boolean secondTest;
         do {
+            System.out.println("Enter facility ID");
+            serviceID = scanner.nextLine();
+            firstTest = MyUtil.checkStr(serviceID, facilityIDs);
+            secondTest = serviceID.matches(MyRegex.REGEX_VILLA_NAME);
+        } while (firstTest && secondTest);
+
+        String serviceName;
+        boolean test;
+        do {
             System.out.println("Enter facility name");
             serviceName = scanner.nextLine();
-            firstTest = MyUtil.checkName(serviceName, facilityNames);
-            secondTest = serviceName.matches(MyRegex.REGEX_VILLA_NAME);
-        } while (firstTest && secondTest);
+            test = MyUtil.checkStr(serviceName, facilityNames);
+        } while (test);
 
         System.out.println("Enter usable area");
         float usageArea = Float.parseFloat(scanner.nextLine());
@@ -421,7 +434,7 @@ public class FuramaController {
         int numberOfFloor = Integer.parseInt(scanner.nextLine());
 
         Villa villa = new Villa(
-                serviceName, usageArea, unitPrice, capacity, rentalType, standard, poolArea, numberOfFloor);
+                serviceID, serviceName, usageArea, unitPrice, capacity, rentalType, standard, poolArea, numberOfFloor);
 
         facilityService.add(villa);
         facilities = facilityService.display();
@@ -429,15 +442,23 @@ public class FuramaController {
     }
 
     private static void addHouse() {
-        String serviceName;
+        String serviceID;
         boolean firstTest;
         boolean secondTest;
         do {
+            System.out.println("Enter facility ID");
+            serviceID = scanner.nextLine();
+            firstTest = MyUtil.checkStr(serviceID, facilityIDs);
+            secondTest = serviceID.matches(MyRegex.REGEX_HOUSE_NAME);
+        } while (firstTest && secondTest);
+
+        String serviceName;
+        boolean test;
+        do {
             System.out.println("Enter facility name");
             serviceName = scanner.nextLine();
-            firstTest = MyUtil.checkName(serviceName, facilityNames);
-            secondTest = serviceName.matches(MyRegex.REGEX_HOUSE_NAME);
-        } while (firstTest && secondTest);
+            test = MyUtil.checkStr(serviceName, facilityNames);
+        } while (test);
 
         System.out.println("Enter usable area");
         float usageArea = Float.parseFloat(scanner.nextLine());
@@ -458,7 +479,7 @@ public class FuramaController {
         int numberOfFloor = Integer.parseInt(scanner.nextLine());
 
         House house = new House(
-                serviceName, usageArea, unitPrice, capacity, rentalType, standard, numberOfFloor);
+                serviceID, serviceName, usageArea, unitPrice, capacity, rentalType, standard, numberOfFloor);
 
         facilityService.add(house);
         facilities = facilityService.display();
@@ -466,15 +487,23 @@ public class FuramaController {
     }
 
     private static void addRoom() {
-        String serviceName;
+        String serviceID;
         boolean firstTest;
         boolean secondTest;
         do {
+            System.out.println("Enter facility ID");
+            serviceID = scanner.nextLine();
+            firstTest = MyUtil.checkStr(serviceID, facilityIDs);
+            secondTest = serviceID.matches(MyRegex.REGEX_ROOM_NAME);
+        } while (firstTest && secondTest);
+
+        String serviceName;
+        boolean test;
+        do {
             System.out.println("Enter facility name");
             serviceName = scanner.nextLine();
-            firstTest = MyUtil.checkName(serviceName, facilityNames);
-            secondTest = serviceName.matches(MyRegex.REGEX_ROOM_NAME);
-        } while (firstTest && secondTest);
+            test = MyUtil.checkStr(serviceName, facilityNames);
+        } while (test);
 
         System.out.println("Enter usable area");
         float usageArea = Float.parseFloat(scanner.nextLine());
@@ -492,7 +521,7 @@ public class FuramaController {
         String freeService = scanner.nextLine();
 
         Room room = new Room(
-                serviceName, usageArea, unitPrice, capacity, rentalType, freeService);
+                serviceID, serviceName, usageArea, unitPrice, capacity, rentalType, freeService);
 
         facilityService.add(room);
         facilities = facilityService.display();
@@ -572,17 +601,25 @@ public class FuramaController {
         System.out.println("Enter finish date");
         String finishDate = scanner.nextLine();
 
-        String serviceName;
+        String serviceID;
         do {
-            serviceName = MyUtil.SelectServiceName(facilityNames);
-        } while (serviceName == null);
+            serviceID = MyUtil.selectServiceID(facilityIDs);
+        } while (serviceID == null);
+
+        String serviceName = null;
+        for (Map.Entry<Facility, Integer> entry : facilities.entrySet()) {
+            if (entry.getKey().getServiceID().equals(serviceID)) {
+                serviceName = entry.getKey().getServiceName();
+                break;
+            }
+        }
 
         System.out.println("Enter service type");
         String serviceType = scanner.nextLine();
 
         // Update Map Facility
         for (Map.Entry<Facility, Integer> entry : facilities.entrySet()) {
-            if(entry.getKey().getServiceName().equals(serviceName)) {
+            if (entry.getKey().getServiceID().equals(serviceID)) {
                 int value = entry.getValue() + 1;
                 facilityService.update(entry.getKey(), value);
                 facilityService.display();
@@ -590,8 +627,8 @@ public class FuramaController {
             }
         }
 
-        Booking booking = new Booking(id, beginDate, finishDate, customerID, serviceName, serviceType);
-//        bookingService.add(booking);
+        Booking booking = new Booking(id, beginDate, finishDate, customerID, serviceID, serviceName, serviceType);
+        // bookingService.add(booking);
     }
 
     private static void displayBooking() {

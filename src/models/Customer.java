@@ -44,22 +44,6 @@ public class Customer extends Person {
         System.out.println("This is the list of customers!");
     }
 
-    public Booking book() {
-        System.out.println("Enter bookingID");
-        int bookingID = 0;
-
-        String beginDate = null;
-        String finishDate = null;
-        int customerID = 0;
-        String serviceName = null;
-        String serviceType = null;
-
-
-
-        return new Booking(
-                bookingID, beginDate, finishDate, customerID, serviceName,serviceType);
-    }
-
     @Override
     public String toString() {
         return "Customer{" +

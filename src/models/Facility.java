@@ -1,6 +1,7 @@
 package models;
 
 public abstract class Facility {
+    private String serviceID;
     private String serviceName;
     private float usableArea;
     private long unitPrice;
@@ -10,12 +11,21 @@ public abstract class Facility {
     public Facility() {
     }
 
-    public Facility(String serviceName, float usableArea, long unitPrice, int capacity, String rentalType) {
+    public Facility(String serviceID, String serviceName, float usableArea, long unitPrice, int capacity, String rentalType) {
+        this.serviceID = serviceID;
         this.serviceName = serviceName;
         this.usableArea = usableArea;
         this.unitPrice = unitPrice;
         this.capacity = capacity;
         this.rentalType = rentalType;
+    }
+
+    public String getServiceID() {
+        return serviceID;
+    }
+
+    public void setServiceID(String serviceID) {
+        this.serviceID = serviceID;
     }
 
     public String getServiceName() {
@@ -63,6 +73,7 @@ public abstract class Facility {
     @Override
     public String toString() {
         return "Facility{" +
+                "serviceID='" + serviceID + '\'' +
                 "serviceName='" + serviceName + '\'' +
                 ", usableArea=" + usableArea +
                 ", unitPrice=" + unitPrice +

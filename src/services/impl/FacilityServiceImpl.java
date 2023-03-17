@@ -13,15 +13,14 @@ public class FacilityServiceImpl implements FacilityService {
     public static Map<Facility, Integer> facilityMap = new LinkedHashMap<>();
 
     static {
-        Villa villa1 = new Villa("villa1", 100, 1000000, 20, "by day", "5 stars", 45, 3);
-        House house1 = new House("house1", 75, 500000, 15, "by month", "2 stars", 2);
-        Room room1 = new Room("room1", 25, 400000, 5, "by hour", "fruit");
+        Villa villa1 = new Villa("SVVL-0001", "Villa1", 100, 1000000, 20, "by day", "5 stars", 45, 3);
+        House house1 = new House("SVHO-0001", "House1", 75, 500000, 15, "by month", "2 stars", 2);
+        Room room1 = new Room("SVRO-0001", "Room1", 25, 400000, 5, "by hour", "fruit");
 
         facilityMap.put(villa1, 2);
         facilityMap.put(house1, 5);
         facilityMap.put(room1, 3);
     }
-
 
     @Override
     public Map<Facility, Integer> display() {
@@ -33,8 +32,8 @@ public class FacilityServiceImpl implements FacilityService {
         facilityMap.put(facility, 0);
     }
 
-    public void update(Facility facility, int value){
-        facilityMap.put(facility,value);
+    public void update(Facility facility, int value) {
+        facilityMap.put(facility, value);
     }
 
     @Override

@@ -22,8 +22,8 @@ public class MyUtil {
         }
     }
 
-    public static boolean checkName(String name, List<String> names) {
-        if (names.contains(name)) {
+    public static boolean checkStr(String str, List<String> strList) {
+        if (strList.contains(str)) {
             return true;
         } else {
             return false;
@@ -315,23 +315,23 @@ public class MyUtil {
         return select;
     }
 
-    public static String SelectServiceName(List<String> names) {
+    public static String selectServiceID(List<String> ids) {
         String select;
         int exit = 0;
         boolean test;
 
         System.out.println("List of service:");
-        for (String name : names) {
-            System.out.println(name);
+        for (String id : ids) {
+            System.out.println(id);
         }
 
         do {
             test = false;
-            System.out.println("Enter service name");
+            System.out.println("Enter service ID");
             select = scanner.nextLine();
-            for (String name : names) {
-                if (name.equals(select)) {
-                    System.out.println("Service is selected: " + name);
+            for (String id : ids) {
+                if (id.equals(select)) {
+                    System.out.println("Service is selected: " + id);
                     test = true;
                     break;
                 }
