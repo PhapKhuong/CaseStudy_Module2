@@ -7,11 +7,13 @@ public class MyRegex {
     //   KH-XXXX
     public static final String REGEX_CUSTOMER_ID = "^KH-[\\d]{4}$";
     //   DV-XXXX
-    public static final String REGEX_VILLA_NAME = "^SVVL-[\\d]{4}$";
-    public static final String REGEX_HOUSE_NAME = "^SVHO-[\\d]{4}$";
-    public static final String REGEX_ROOM_NAME = "^SVRO-[\\d]{4}$";
+    public static final String REGEX_VILLA_ID = "^SVVL-[\\d]{4}$";
+    public static final String REGEX_HOUSE_ID = "^SVHO-[\\d]{4}$";
+    public static final String REGEX_ROOM_ID = "^SVRO-[\\d]{4}$";
     //   Tên
     public static final String REGEX_NAME = "^[A-Z][a-z]+(\\s[A-Z][a-z]+)*$";
+    // Ngày tháng năm
+    public static final String REGEX_DATE = "dd/MM/yyyy";
     //   Số điện thoại
     //   090xxxxxxx hoặc 091xxxxxxx hoặc (84)+90xxxxxxx hoặc (84)+91xxxxxxx
     public static final String REGEX_PHONE = "^(090|091|\\(84\\)\\+90|\\(84\\)\\+91)[\\d]{7}$";

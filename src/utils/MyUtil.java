@@ -1,9 +1,15 @@
 package utils;
 
+import libs.DateOfBirthException;
+import libs.MyRegex;
 import models.Customer;
 import models.Employee;
 import models.Facility;
+import sun.util.resources.LocaleData;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -54,9 +60,18 @@ public class MyUtil {
                     employee.setName(name);
                     break;
                 case 2:
-                    System.out.println("Enter new date of birth");
-                    String dateOfBirth = scanner.nextLine();
-                    employee.setDateOfBirth(dateOfBirth);
+                    while (true) {
+                        try {
+                            System.out.println("Enter new date of birth");
+                            String dateOfBirth = scanner.nextLine();
+                            employee.setDateOfBirth(dateOfBirth);
+                            break;
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Incorrect format, please input again");
+                        } catch (DateOfBirthException e) {
+                            System.out.println("Unreasonable age, please input again");
+                        }
+                    }
                     break;
                 case 3:
                     System.out.println("Enter new gender");
@@ -96,7 +111,8 @@ public class MyUtil {
                 case 10:
                     break;
             }
-        } while (select < 10);
+        }
+        while (select < 10);
     }
 
     public static void editCustomerByID(Customer customer) {
@@ -122,9 +138,18 @@ public class MyUtil {
                     customer.setName(name);
                     break;
                 case 2:
-                    System.out.println("Enter new date of birth");
-                    String dateOfBirth = scanner.nextLine();
-                    customer.setDateOfBirth(dateOfBirth);
+                    while (true) {
+                        try {
+                            System.out.println("Enter new date of birth");
+                            String dateOfBirth = scanner.nextLine();
+                            customer.setDateOfBirth(dateOfBirth);
+                            break;
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Incorrect format, please input again!");
+                        } catch (DateOfBirthException e) {
+                            System.out.println("Unreasonable age, please input again");
+                        }
+                    }
                     break;
                 case 3:
                     System.out.println("Enter new gender");
@@ -358,5 +383,19 @@ public class MyUtil {
             }
         }
         return null;
+    }
+
+    public static LocalDate parseDate(String str) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(MyRegex.REGEX_DATE);
+
+        return LocalDate.parse(str, formatter);
+    }
+
+    public static String parseString(LocalDate date) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(MyRegex.REGEX_DATE);
+
+        return date.format(formatter);
     }
 }

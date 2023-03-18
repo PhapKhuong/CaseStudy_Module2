@@ -1,16 +1,16 @@
 package models;
 
 public class Contract {
-    private int contractID;         // Số hợp đồng
-    private int contractBookingID;  // Mã booking
-    private long deposits;          // Số tiền cọc trước
-    private long payment;           // Số tiền thanh toán
-    private int contractCustomerID; // Mã khách hàng
+    private int contractID;
+    private int contractBookingID;
+    private long deposits;
+    private long payment;
+    private int contractCustomerID;
 
-    public Contract () {
+    public Contract() {
     }
 
-    public Contract (int contractID, int contractBookingID, long deposits, long payment, int contractCustomerID){
+    public Contract(int contractID, int contractBookingID, long deposits, long payment, int contractCustomerID) {
         this.contractID = contractID;
         this.contractBookingID = contractBookingID;
         this.deposits = deposits;

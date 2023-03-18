@@ -1,9 +1,14 @@
 package models;
 
+import utils.MyUtil;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 public class Booking {
     private int bookingID;
-    private String beginDate;
-    private String finishDate;
+    private LocalDate beginDate;
+    private LocalDate finishDate;
     private int customerID;
     private String serviceID;
     private String serviceName;
@@ -13,10 +18,10 @@ public class Booking {
     }
 
     public Booking(int bookingID, String beginDate, String finishDate, int customerID,
-            String serviceID, String serviceName, String serviceType) {
+                   String serviceID, String serviceName, String serviceType) {
         this.bookingID = bookingID;
-        this.beginDate = beginDate;
-        this.finishDate = finishDate;
+        this.beginDate = MyUtil.parseDate(beginDate);
+        this.finishDate = MyUtil.parseDate(finishDate);
         this.customerID = customerID;
         this.serviceID = serviceID;
         this.serviceName = serviceName;
@@ -32,19 +37,19 @@ public class Booking {
     }
 
     public String getBeginDate() {
-        return beginDate;
+        return MyUtil.parseString(beginDate);
     }
 
-    public void setBeginDate(String beginDate) {
-        this.beginDate = beginDate;
+    public void setBeginDate(String beginDate) throws DateTimeParseException {
+        this.beginDate = MyUtil.parseDate(beginDate);
     }
 
     public String getFinishDate() {
-        return finishDate;
+        return MyUtil.parseString(finishDate);
     }
 
-    public void setFinishDate(String finishDate) {
-        this.finishDate = finishDate;
+    public void setFinishDate(String finishDate) throws DateTimeParseException {
+        this.finishDate = MyUtil.parseDate(finishDate);
     }
 
     public int getCustomerID() {

@@ -8,11 +8,9 @@ import java.util.*;
 public class BookingServiceImpl implements BookingService {
     public static SortedSet<Booking> bookingSet = new TreeSet<>();
 
-//    static {
-//        Booking booking1 = new Booking(
-//                2, "32", "32", 1, "sd", "sdf");
-//        bookingSet.add(booking1);
-//    }
+    static {
+
+    }
 
     @Override
     public void add(Booking booking) {

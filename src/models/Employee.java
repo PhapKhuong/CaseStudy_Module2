@@ -1,7 +1,5 @@
 package models;
 
-import java.time.LocalDate;
-
 public class Employee extends Person{
     private int employeeID;
     private String level;

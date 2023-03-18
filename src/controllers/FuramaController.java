@@ -1,5 +1,6 @@
 package controllers;
 
+import libs.DateOfBirthException;
 import libs.MyRegex;
 import utils.MyUtil;
 import models.*;
@@ -12,6 +13,7 @@ import services.itf.EmployeeService;
 import services.impl.EmployeeServiceImpl;
 import services.itf.FacilityService;
 
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class FuramaController {
@@ -159,42 +161,59 @@ public class FuramaController {
     }
 
     private static void addEmployee() {
+        Employee employee = new Employee();
+
         int id;
         do {
             System.out.println("Enter employee's ID");
             id = Integer.parseInt(scanner.nextLine());
         } while (MyUtil.checkID(id, employeeIDs));
+        employee.setEmployeeID(id);
 
         System.out.println("Enter employee's name");
         String name = scanner.nextLine();
+        employee.setName(name);
 
-        System.out.println("Enter date of birth (dd-MM-yyyy)");
-        String dateOfBirth = scanner.nextLine();
+        while (true) {
+            try {
+                System.out.println("Enter date of birth (dd/MM/yyyy)");
+                String dateOfBirth = scanner.nextLine();
+                employee.setDateOfBirth(dateOfBirth);
+                break;
+            } catch (DateTimeParseException e) {
+                System.out.println("Incorrect format, please input again!");
+            } catch (DateOfBirthException e) {
+                System.out.println("Unreasonable age, please input again");
+            }
+        }
 
         System.out.println("Enter employee's gender");
         String gender = MyUtil.selectGender();
+        employee.setGender(gender);
 
         System.out.println("Enter employee's indentity card");
         String idCard = scanner.nextLine();
+        employee.setIdCard(idCard);
 
         System.out.println("Enter employee's phone number");
         String phone = scanner.nextLine();
+        employee.setPhone(phone);
 
         System.out.println("Enter employee's email");
         String email = scanner.nextLine();
+        employee.setEmail(email);
 
         System.out.println("Enter employee's level");
         String level = MyUtil.selectLevel();
+        employee.setLevel(level);
 
         System.out.println("Enter employee's position");
         String position = MyUtil.selectPosition();
+        employee.setPosition(position);
 
         System.out.println("Enter employee's salary");
         long salary = Long.parseLong(scanner.nextLine());
-
-        Employee employee = new Employee(
-                name, dateOfBirth, gender, idCard, phone, email, id,
-                level, position, salary);
+        employee.setSalary(salary);
 
         employeeService.add(employee);
         employeeIDs.add(employee.getEmployeeID());
@@ -263,39 +282,55 @@ public class FuramaController {
     }
 
     private static void addCustomer() {
+        Customer customer = new Customer();
+
         int id;
         do {
             System.out.println("Enter customer's ID");
             id = Integer.parseInt(scanner.nextLine());
         } while (MyUtil.checkID(id, customerIDs));
+        customer.setCustomerID(id);
 
         System.out.println("Enter customer's name");
         String name = scanner.nextLine();
+        customer.setName(name);
 
-        System.out.println("Enter date of birth (dd-MM-yyyy)");
-        String dateOfBirth = scanner.nextLine();
+        while (true) {
+            try {
+                System.out.println("Enter date of birth (dd-MM-yyyy)");
+                String dateOfBirth = scanner.nextLine();
+                customer.setDateOfBirth(dateOfBirth);
+                break;
+            } catch (DateTimeParseException e) {
+                System.out.println("Incorrect format, please input again");
+            } catch (DateOfBirthException e) {
+                System.out.println("Unreasonable age, please input again");
+            }
+        }
 
         System.out.println("Enter customer's gender");
         String gender = MyUtil.selectGender();
+        customer.setGender(gender);
 
         System.out.println("Enter customer's indentity card");
         String idCard = scanner.nextLine();
+        customer.setIdCard(idCard);
 
         System.out.println("Enter customer's phone number");
         String phone = scanner.nextLine();
+        customer.setPhone(phone);
 
         System.out.println("Enter customer's email");
         String email = scanner.nextLine();
+        customer.setEmail(email);
 
         System.out.println("Enter customer type");
         String customerType = MyUtil.selectCustomerType();
+        customer.setCustomerType(customerType);
 
         System.out.println("Enter customer's address");
         String address = scanner.nextLine();
-
-        Customer customer = new Customer(
-                name, dateOfBirth, gender, idCard, phone, email, id,
-                customerType, address);
+        customer.setAddress(address);
 
         customerService.add(customer);
         customerIDs.add(customer.getCustomerID());
@@ -395,22 +430,24 @@ public class FuramaController {
     // CÁC METHOD ĐƯỢC TRIỂN KHAI TỪ ADD FACILITY
     private static void addVilla() {
         String serviceID;
-        boolean firstTest;
-        boolean secondTest;
+        boolean firstTestID;
+        boolean secondTestID;
         do {
             System.out.println("Enter facility ID");
             serviceID = scanner.nextLine();
-            firstTest = MyUtil.checkStr(serviceID, facilityIDs);
-            secondTest = serviceID.matches(MyRegex.REGEX_VILLA_NAME);
-        } while (firstTest && secondTest);
+            firstTestID = MyUtil.checkStr(serviceID, facilityIDs);
+            secondTestID = serviceID.matches(MyRegex.REGEX_VILLA_ID);
+        } while (firstTestID && secondTestID);
 
         String serviceName;
-        boolean test;
+        boolean firstTestName;
+        boolean secondTestName;
         do {
             System.out.println("Enter facility name");
             serviceName = scanner.nextLine();
-            test = MyUtil.checkStr(serviceName, facilityNames);
-        } while (test);
+            firstTestName = MyUtil.checkStr(serviceName, facilityNames);
+            secondTestName = serviceName.matches(MyRegex.REGEX_NAME);
+        } while (firstTestName && secondTestName);
 
         System.out.println("Enter usable area");
         float usageArea = Float.parseFloat(scanner.nextLine());
@@ -443,22 +480,24 @@ public class FuramaController {
 
     private static void addHouse() {
         String serviceID;
-        boolean firstTest;
-        boolean secondTest;
+        boolean firstTestID;
+        boolean secondTestID;
         do {
             System.out.println("Enter facility ID");
             serviceID = scanner.nextLine();
-            firstTest = MyUtil.checkStr(serviceID, facilityIDs);
-            secondTest = serviceID.matches(MyRegex.REGEX_HOUSE_NAME);
-        } while (firstTest && secondTest);
+            firstTestID = MyUtil.checkStr(serviceID, facilityIDs);
+            secondTestID = serviceID.matches(MyRegex.REGEX_HOUSE_ID);
+        } while (firstTestID && secondTestID);
 
         String serviceName;
-        boolean test;
+        boolean firstTestName;
+        boolean secondTestName;
         do {
             System.out.println("Enter facility name");
             serviceName = scanner.nextLine();
-            test = MyUtil.checkStr(serviceName, facilityNames);
-        } while (test);
+            firstTestName = MyUtil.checkStr(serviceName, facilityNames);
+            secondTestName = serviceName.matches(MyRegex.REGEX_NAME);
+        } while (firstTestName && secondTestName);
 
         System.out.println("Enter usable area");
         float usageArea = Float.parseFloat(scanner.nextLine());
@@ -488,22 +527,24 @@ public class FuramaController {
 
     private static void addRoom() {
         String serviceID;
-        boolean firstTest;
-        boolean secondTest;
+        boolean firstTestID;
+        boolean secondTestID;
         do {
             System.out.println("Enter facility ID");
             serviceID = scanner.nextLine();
-            firstTest = MyUtil.checkStr(serviceID, facilityIDs);
-            secondTest = serviceID.matches(MyRegex.REGEX_ROOM_NAME);
-        } while (firstTest && secondTest);
+            firstTestID = MyUtil.checkStr(serviceID, facilityIDs);
+            secondTestID = serviceID.matches(MyRegex.REGEX_ROOM_ID);
+        } while (firstTestID && secondTestID);
 
         String serviceName;
-        boolean test;
+        boolean fistTestName;
+        boolean secondTestName;
         do {
             System.out.println("Enter facility name");
             serviceName = scanner.nextLine();
-            test = MyUtil.checkStr(serviceName, facilityNames);
-        } while (test);
+            fistTestName = MyUtil.checkStr(serviceName, facilityNames);
+            secondTestName = serviceName.matches(MyRegex.REGEX_NAME);
+        } while (fistTestName && secondTestName);
 
         System.out.println("Enter usable area");
         float usageArea = Float.parseFloat(scanner.nextLine());
@@ -586,25 +627,47 @@ public class FuramaController {
 
     // CÁC METHOD ĐƯỢC GỌI TỪ MENU FACILITY
     private static void addBooking() {
+        Booking booking = new Booking();
+        /*bookingService.add(booking);*/
+
         int customerID;
         do {
             customerID = MyUtil.selectID(customers);
         }
         while (customerID == -1);
+        booking.setCustomerID(customerID);
 
         System.out.println("Enter booking ID");
         int id = Integer.parseInt(scanner.nextLine());
+        booking.setBookingID(id);
 
-        System.out.println("Enter begin date");
-        String beginDate = scanner.nextLine();
+        while (true) {
+            try {
+                System.out.println("Enter begin date (dd/MM/yyyy");
+                String beginDate = scanner.nextLine();
+                booking.setBeginDate(beginDate);
+                break;
+            } catch (DateTimeParseException e) {
+                System.out.println("Incorrect format, please input again!");
+            }
+        }
 
-        System.out.println("Enter finish date");
-        String finishDate = scanner.nextLine();
+        while (true) {
+            try {
+                System.out.println("Enter finish date (dd/MM/yyyy");
+                String finishDate = scanner.nextLine();
+                booking.setFinishDate(finishDate);
+                break;
+            } catch (DateTimeParseException e) {
+                System.out.println("Incorrect format, please input again!");
+            }
+        }
 
         String serviceID;
         do {
             serviceID = MyUtil.selectServiceID(facilityIDs);
         } while (serviceID == null);
+        booking.setServiceID(serviceID);
 
         String serviceName = null;
         for (Map.Entry<Facility, Integer> entry : facilities.entrySet()) {
@@ -613,9 +676,11 @@ public class FuramaController {
                 break;
             }
         }
+        booking.setServiceName(serviceName);
 
         System.out.println("Enter service type");
         String serviceType = scanner.nextLine();
+        booking.setServiceType(serviceType);
 
         // Update Map Facility
         for (Map.Entry<Facility, Integer> entry : facilities.entrySet()) {
@@ -626,9 +691,6 @@ public class FuramaController {
                 break;
             }
         }
-
-        Booking booking = new Booking(id, beginDate, finishDate, customerID, serviceID, serviceName, serviceType);
-        // bookingService.add(booking);
     }
 
     private static void displayBooking() {

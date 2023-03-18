@@ -1,8 +1,14 @@
 package models;
 
+import libs.DateOfBirthException;
+import utils.MyUtil;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 public abstract class Person {
     private String name;
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
     private String gender;
     private String idCard;
     private String phone;
@@ -13,7 +19,7 @@ public abstract class Person {
 
     public Person(String name, String dateOfBirth, String gender, String idCard, String phone, String email) {
         this.name = name;
-        this.dateOfBirth = dateOfBirth;
+        this.dateOfBirth = MyUtil.parseDate(dateOfBirth);
         this.gender = gender;
         this.idCard = idCard;
         this.phone = phone;
@@ -29,11 +35,20 @@ public abstract class Person {
     }
 
     public String getDateOfBirth() {
-        return dateOfBirth;
+        return MyUtil.parseString(dateOfBirth);
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setDateOfBirth(String dateOfBirth) throws DateTimeParseException, DateOfBirthException {
+        LocalDate date = MyUtil.parseDate(dateOfBirth);
+        LocalDate minDate = date.plusYears(18);
+        LocalDate maxDate = date.plusYears(100);
+        LocalDate now = LocalDate.now();
+
+        if(minDate.isBefore(now) && maxDate.isAfter(now)) {
+            this.dateOfBirth = MyUtil.parseDate(dateOfBirth);
+        } else {
+            throw new DateOfBirthException();
+        }
     }
 
     public String isGender() {
@@ -73,7 +88,7 @@ public abstract class Person {
     @Override
     public String toString() {
         return "name='" + name + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
+                ", dateOfBirth=" + this.getDateOfBirth() +
                 ", gender=" + gender +
                 ", idCard='" + idCard + '\'' +
                 ", phone='" + phone + '\'' +
