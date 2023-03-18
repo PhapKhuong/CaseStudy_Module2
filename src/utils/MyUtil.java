@@ -255,22 +255,22 @@ public class MyUtil {
     public static String selectRentalType() {
         int select;
         do {
-            System.out.println("1. by year");
-            System.out.println("2. by month");
-            System.out.println("3. by day");
-            System.out.println("4. by hour");
+            System.out.println("1. By year");
+            System.out.println("2. By month");
+            System.out.println("3. By day");
+            System.out.println("4. By hour");
             System.out.println("Select rental type");
 
             select = Integer.parseInt(scanner.nextLine());
             switch (select) {
                 case 1:
-                    return "by year";
+                    return "By year";
                 case 2:
-                    return "by month";
+                    return "By month";
                 case 3:
-                    return "by day";
+                    return "By day";
                 case 4:
-                    return "by hour";
+                    return "By hour";
             }
         } while (true);
     }
@@ -397,5 +397,53 @@ public class MyUtil {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(MyRegex.REGEX_DATE);
 
         return date.format(formatter);
+    }
+
+    public static float setArea() {
+        float area;
+        do {
+            System.out.println("Enter area (> 30m2)");
+            area = Float.parseFloat(scanner.nextLine());
+        } while (area <= 30);
+        return area;
+    }
+
+    public static long setPrice() {
+        long price;
+        do {
+            System.out.println("Enter price");
+            price = Long.parseLong(scanner.nextLine());
+        } while (price <= 0);
+        return price;
+    }
+
+    public static int setCapacity() {
+        int capacity;
+        do {
+            System.out.println("Enter capacity");
+            capacity = Integer.parseInt(scanner.nextLine());
+        } while (capacity <= 0 || capacity >= 20);
+        return capacity;
+    }
+
+    public static int setFloor() {
+        int floor;
+        do {
+            System.out.println("Enter floor");
+            floor = Integer.parseInt(scanner.nextLine());
+        } while (floor <= 0);
+        return floor;
+    }
+
+    public static String setStandard() {
+        String standard;
+        boolean testStandard;
+        do {
+            System.out.println("Enter standard");
+            standard = scanner.nextLine();
+            testStandard = standard.matches(MyRegex.REGEX_NAME);
+        } while (!testStandard);
+
+        return standard;
     }
 }
