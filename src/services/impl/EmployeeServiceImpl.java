@@ -1,33 +1,42 @@
 package services.impl;
 
+import data.class_data.EmployeeData;
 import models.Employee;
 import services.itf.EmployeeService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeServiceImpl implements EmployeeService {
-    public static List<Employee> employeeList = new ArrayList<>();
+    private static List<Employee> employeeList = new ArrayList<>();
 
     static {
-        employeeList.add(new Employee("A1B1C1", "01/01/1987","Men", "123456", "123456789",
-                "abc@gmail.com", 1, "Intermediate", "x", 1000));
-
-        employeeList.add(new Employee("A2B2C2", "02/02/1988", "Women", "123456", "123456789",
-                "abc@gmail.com", 2, "College", "y", 3000));
-
-        employeeList.add(new Employee("A3B3C3", "03/03/1989", "Women", "234567", "123456789",
-                "abc@gmail.com", 3, "College", "z", 20000));
+        try {
+            employeeList = EmployeeData.readEmployeeFile();
+        } catch (IOException e) {
+            System.out.println("File is not exist");
+        }
     }
 
     @Override
     public List<Employee> display() {
-        return employeeList;
+        try {
+            employeeList = EmployeeData.readEmployeeFile();
+            return employeeList;
+        } catch (IOException e) {
+            System.out.println("File is not exist");
+        }
+        return null;
     }
 
     @Override
     public void add(Employee employee) {
-        employeeList.add(employee);
+        try {
+            EmployeeData.writeEmployeeFile(employee);
+        } catch (IOException e) {
+            System.out.println("File is not exist");
+        }
     }
 
     @Override
@@ -41,5 +50,14 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
         }
         employeeList.set(i, employee);
+
+        try {
+            EmployeeData.clearEmployeeData();
+            for (Employee e : employeeList) {
+                EmployeeData.writeEmployeeFile(e);
+            }
+        } catch (IOException e) {
+            System.out.println("File is not exist");
+        }
     }
 }

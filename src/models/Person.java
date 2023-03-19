@@ -51,7 +51,7 @@ public abstract class Person {
         }
     }
 
-    public String isGender() {
+    public String getGender() {
         return gender;
     }
 

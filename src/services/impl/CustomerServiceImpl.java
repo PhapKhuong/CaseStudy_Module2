@@ -1,30 +1,42 @@
 package services.impl;
 
+import data.class_data.CustomerData;
 import models.Customer;
 import services.itf.CustomerService;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 public class CustomerServiceImpl implements CustomerService {
-    public static List<Customer> customerList = new LinkedList<>();
+    private static List<Customer> customerList = new LinkedList<>();
+
     static {
-        customerList.add(new Customer("Thành", "01/01/2001", "Men", "3452345", "34534", "ewjje",
-                1, "Diamond", "gsdfgf"));
-
-        customerList.add(new Customer("Hà", "02/02/2002", "Women", "3452345", "34534", "ewjje",
-                2, "Silver", "gsdfgf"));
+        try {
+            customerList = CustomerData.readCustomerFile();
+        } catch (IOException e) {
+            System.out.println("File is not exist");
+        }
     }
-
 
     @Override
     public List<Customer> display() {
-        return customerList;
+        try {
+            customerList = CustomerData.readCustomerFile();
+            return customerList;
+        } catch (IOException e) {
+            System.out.println("File is not exist");
+        }
+        return null;
     }
 
     @Override
     public void add(Customer customer) {
-        customerList.add(customer);
+        try {
+            CustomerData.writeCustomerFile(customer);
+        } catch (IOException e) {
+            System.out.println("File is not exist");
+        }
     }
 
     @Override
@@ -37,6 +49,16 @@ public class CustomerServiceImpl implements CustomerService {
                 i++;
             }
         }
+
         customerList.set(i, customer);
+
+        try {
+            CustomerData.clearCustomerData();
+            for (Customer c : customerList) {
+                CustomerData.writeCustomerFile(c);
+            }
+        } catch (IOException e) {
+            System.out.println("File is not exist");
+        }
     }
 }

@@ -13,6 +13,7 @@ import services.itf.EmployeeService;
 import services.impl.EmployeeServiceImpl;
 import services.itf.FacilityService;
 
+import java.io.IOException;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
@@ -216,6 +217,7 @@ public class FuramaController {
         employee.setSalary(salary);
 
         employeeService.add(employee);
+        employees = employeeService.display();
         employeeIDs.add(employee.getEmployeeID());
     }
 
@@ -228,6 +230,7 @@ public class FuramaController {
             int index = employeeIDs.indexOf(id);
             MyUtil.editEmployeeByID(employees.get(index));
             employeeService.edit(id, employees.get(index));
+            employees = employeeService.display();
         } else {
             System.out.println("This employee is not exist!");
         }
@@ -297,7 +300,7 @@ public class FuramaController {
 
         while (true) {
             try {
-                System.out.println("Enter date of birth (dd-MM-yyyy)");
+                System.out.println("Enter date of birth (dd/MM/yyyy)");
                 String dateOfBirth = scanner.nextLine();
                 customer.setDateOfBirth(dateOfBirth);
                 break;
@@ -333,6 +336,7 @@ public class FuramaController {
         customer.setAddress(address);
 
         customerService.add(customer);
+        customers = customerService.display();
         customerIDs.add(customer.getCustomerID());
     }
 
@@ -345,6 +349,7 @@ public class FuramaController {
             int index = customerIDs.indexOf(id);
             MyUtil.editCustomerByID(customers.get(index));
             customerService.edit(id, customers.get(index));
+            customers = customerService.display();
         } else {
             System.out.println("This customer is not exist!");
         }
