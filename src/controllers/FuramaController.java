@@ -13,7 +13,6 @@ import services.itf.EmployeeService;
 import services.impl.EmployeeServiceImpl;
 import services.itf.FacilityService;
 
-import java.io.IOException;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
@@ -166,8 +165,7 @@ public class FuramaController {
 
         int id;
         do {
-            System.out.println("Enter employee's ID");
-            id = Integer.parseInt(scanner.nextLine());
+            id = MyUtil.inputInt();
         } while (MyUtil.checkID(id, employeeIDs));
         employee.setEmployeeID(id);
 
@@ -212,8 +210,8 @@ public class FuramaController {
         String position = MyUtil.selectPosition();
         employee.setPosition(position);
 
-        System.out.println("Enter employee's salary");
-        long salary = Long.parseLong(scanner.nextLine());
+        long salary;
+        salary = MyUtil.inputSalary();
         employee.setSalary(salary);
 
         employeeService.add(employee);
@@ -222,8 +220,7 @@ public class FuramaController {
     }
 
     private static void editEmployee() {
-        System.out.println("Enter employee's ID");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = MyUtil.inputInt();
         boolean test = MyUtil.checkID(id, employeeIDs);
 
         if (test) {
@@ -289,8 +286,7 @@ public class FuramaController {
 
         int id;
         do {
-            System.out.println("Enter customer's ID");
-            id = Integer.parseInt(scanner.nextLine());
+            id = MyUtil.inputInt();
         } while (MyUtil.checkID(id, customerIDs));
         customer.setCustomerID(id);
 
@@ -341,8 +337,7 @@ public class FuramaController {
     }
 
     private static void editCustomer() {
-        System.out.println("Enter customer's ID");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = MyUtil.inputInt();
         boolean test = MyUtil.checkID(id, customerIDs);
 
         if (test) {
@@ -463,7 +458,7 @@ public class FuramaController {
         System.out.println("Enter rental type");
         String rentalType = MyUtil.selectRentalType();
 
-        String standard =MyUtil.setStandard();
+        String standard = MyUtil.setStandard();
 
         float poolArea = MyUtil.setArea();
 
@@ -508,7 +503,7 @@ public class FuramaController {
         System.out.println("Enter rental type");
         String rentalType = MyUtil.selectRentalType();
 
-        String standard =MyUtil.setStandard();
+        String standard = MyUtil.setStandard();
 
         int numberOfFloor = MyUtil.setFloor();
 
@@ -631,8 +626,7 @@ public class FuramaController {
         while (customerID == -1);
         booking.setCustomerID(customerID);
 
-        System.out.println("Enter booking ID");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = MyUtil.inputInt();
         booking.setBookingID(id);
 
         while (true) {

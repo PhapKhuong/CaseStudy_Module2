@@ -20,6 +20,35 @@ public class MyUtil {
     private MyUtil() {
     }
 
+    public static int inputInt() {
+        int number;
+        while (true) {
+            try {
+                System.out.println("Input ID");
+                number = Integer.parseInt(scanner.nextLine());
+                return number;
+            } catch (NumberFormatException e) {
+                System.out.println("Input must be a number!");
+            }
+        }
+    }
+
+    public static long inputSalary() {
+        long salary;
+        do {
+            while (true) {
+                try {
+                    System.out.println("Input salary");
+                    salary = Long.parseLong(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Salary must be a number!");
+                }
+            }
+        } while (salary <= 0);
+        return salary;
+    }
+
     public static boolean checkID(int id, List<Integer> ids) {
         if (ids.contains(id)) {
             return true;
@@ -50,8 +79,12 @@ public class MyUtil {
             System.out.println("9. Salary");
             System.out.println("10. Finish");
 
-            System.out.println("Select the information to edit");
-            select = Integer.parseInt(scanner.nextLine());
+            try {
+                System.out.println("Select the information to edit");
+                select = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Select from 1 to 10");
+            }
 
             switch (select) {
                 case 1:
@@ -104,8 +137,7 @@ public class MyUtil {
                     employee.setPosition(position);
                     break;
                 case 9:
-                    System.out.println("Enter new position");
-                    long salary = Long.parseLong(scanner.nextLine());
+                    long salary = MyUtil.inputSalary();
                     employee.setSalary(salary);
                     break;
                 case 10:
@@ -128,8 +160,12 @@ public class MyUtil {
             System.out.println("8. Address");
             System.out.println("9. Finish");
 
-            System.out.println("Select the information to edit");
-            select = Integer.parseInt(scanner.nextLine());
+            try {
+                System.out.println("Select the information to edit");
+                select = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Select from 1 to 9");
+            }
 
             switch (select) {
                 case 1:
@@ -190,29 +226,46 @@ public class MyUtil {
     public static String selectGender() {
         int select;
         do {
-            System.out.println("1. Men");
-            System.out.println("2. Women");
-            System.out.println("Select gender");
-            select = Integer.parseInt(scanner.nextLine());
+            while (true) {
+                try {
+                    System.out.println("1. Men");
+                    System.out.println("2. Women");
+                    System.out.println("Select gender");
+                    select = Integer.parseInt(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Select 1 or 2");
+                }
+            }
+
             switch (select) {
                 case 1:
                     return "Men";
                 case 2:
                     return "Women";
             }
-        } while (true);
+        }
+        while (true);
     }
 
     public static String selectLevel() {
         int select;
         do {
-            System.out.println("1. Intermediate");
-            System.out.println("2. College");
-            System.out.println("3. University");
-            System.out.println("4. After University");
-            System.out.println("Select level");
+            while (true) {
+                try {
+                    System.out.println("1. Intermediate");
+                    System.out.println("2. College");
+                    System.out.println("3. University");
+                    System.out.println("4. After University");
+                    System.out.println("Select level");
 
-            select = Integer.parseInt(scanner.nextLine());
+                    select = Integer.parseInt(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Select from 1 to 4");
+                }
+            }
+
             switch (select) {
                 case 1:
                     return "Intermediate";
@@ -229,14 +282,22 @@ public class MyUtil {
     public static String selectCustomerType() {
         int select;
         do {
-            System.out.println("1. Diamond");
-            System.out.println("2. Platinum");
-            System.out.println("3. Gold");
-            System.out.println("4. Silver");
-            System.out.println("5. Member");
-            System.out.println("Select customer type");
+            while (true) {
+                try {
+                    System.out.println("1. Diamond");
+                    System.out.println("2. Platinum");
+                    System.out.println("3. Gold");
+                    System.out.println("4. Silver");
+                    System.out.println("5. Member");
+                    System.out.println("Select customer type");
 
-            select = Integer.parseInt(scanner.nextLine());
+                    select = Integer.parseInt(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Select from 1 to 5");
+                }
+            }
+
             switch (select) {
                 case 1:
                     return "Diamond";
@@ -255,13 +316,20 @@ public class MyUtil {
     public static String selectRentalType() {
         int select;
         do {
-            System.out.println("1. By year");
-            System.out.println("2. By month");
-            System.out.println("3. By day");
-            System.out.println("4. By hour");
-            System.out.println("Select rental type");
+            while (true) {
+                try {
+                    System.out.println("1. By year");
+                    System.out.println("2. By month");
+                    System.out.println("3. By day");
+                    System.out.println("4. By hour");
+                    System.out.println("Select rental type");
+                    select = Integer.parseInt(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Select from 1 to 4");
+                }
+            }
 
-            select = Integer.parseInt(scanner.nextLine());
             switch (select) {
                 case 1:
                     return "By year";
@@ -278,15 +346,23 @@ public class MyUtil {
     public static String selectPosition() {
         int select;
         do {
-            System.out.println("1. Reception");
-            System.out.println("2. Attendant");
-            System.out.println("3. Professional");
-            System.out.println("4. Supervisor");
-            System.out.println("5. Manager");
-            System.out.println("6. Director");
-            System.out.println("Select position");
+            while (true) {
+                try {
+                    System.out.println("1. Reception");
+                    System.out.println("2. Attendant");
+                    System.out.println("3. Professional");
+                    System.out.println("4. Supervisor");
+                    System.out.println("5. Manager");
+                    System.out.println("6. Director");
+                    System.out.println("Select position");
 
-            select = Integer.parseInt(scanner.nextLine());
+                    select = Integer.parseInt(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Select from 1 to 6");
+                }
+            }
+
             switch (select) {
                 case 1:
                     return "Reception";
@@ -402,8 +478,15 @@ public class MyUtil {
     public static float setArea() {
         float area;
         do {
-            System.out.println("Enter area (> 30m2)");
-            area = Float.parseFloat(scanner.nextLine());
+            while (true) {
+                try {
+                    System.out.println("Enter area (> 30m2)");
+                    area = Float.parseFloat(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Area must be a number");
+                }
+            }
         } while (area <= 30);
         return area;
     }
@@ -411,8 +494,15 @@ public class MyUtil {
     public static long setPrice() {
         long price;
         do {
-            System.out.println("Enter price");
-            price = Long.parseLong(scanner.nextLine());
+            while (true) {
+                try {
+                    System.out.println("Enter price");
+                    price = Long.parseLong(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Price must be a number");
+                }
+            }
         } while (price <= 0);
         return price;
     }
@@ -420,8 +510,15 @@ public class MyUtil {
     public static int setCapacity() {
         int capacity;
         do {
-            System.out.println("Enter capacity");
-            capacity = Integer.parseInt(scanner.nextLine());
+            while (true) {
+                try {
+                    System.out.println("Enter capacity");
+                    capacity = Integer.parseInt(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Capacity must be a number");
+                }
+            }
         } while (capacity <= 0 || capacity >= 20);
         return capacity;
     }
@@ -429,8 +526,15 @@ public class MyUtil {
     public static int setFloor() {
         int floor;
         do {
-            System.out.println("Enter floor");
-            floor = Integer.parseInt(scanner.nextLine());
+            while (true) {
+                try {
+                    System.out.println("Enter floor");
+                    floor = Integer.parseInt(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Floor must be a number");
+                }
+            }
         } while (floor <= 0);
         return floor;
     }

@@ -1,7 +1,5 @@
 package models;
 
-import java.time.LocalDate;
-
 public class Customer extends Person {
     private int customerID;
     private String customerType;
