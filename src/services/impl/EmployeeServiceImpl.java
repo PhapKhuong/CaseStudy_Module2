@@ -13,7 +13,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     static {
         try {
-            employeeList = EmployeeData.readEmployeeFile();
+            employeeList = EmployeeData.readFile();
         } catch (IOException e) {
             System.out.println("File is not exist");
         }
@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> display() {
         try {
-            employeeList = EmployeeData.readEmployeeFile();
+            employeeList = EmployeeData.readFile();
             return employeeList;
         } catch (IOException e) {
             System.out.println("File is not exist");
@@ -33,7 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void add(Employee employee) {
         try {
-            EmployeeData.writeEmployeeFile(employee);
+            EmployeeData.writeFile(employee);
         } catch (IOException e) {
             System.out.println("File is not exist");
         }
@@ -52,9 +52,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeList.set(i, employee);
 
         try {
-            EmployeeData.clearEmployeeData();
+            EmployeeData.clear();
             for (Employee e : employeeList) {
-                EmployeeData.writeEmployeeFile(e);
+                EmployeeData.writeFile(e);
             }
         } catch (IOException e) {
             System.out.println("File is not exist");

@@ -2,16 +2,10 @@ package controllers;
 
 import libs.DateOfBirthException;
 import libs.MyRegex;
+import services.impl.*;
+import services.itf.*;
 import utils.MyUtil;
 import models.*;
-import services.impl.BookingServiceImpl;
-import services.impl.CustomerServiceImpl;
-import services.impl.FacilityServiceImpl;
-import services.itf.BookingService;
-import services.itf.CustomerService;
-import services.itf.EmployeeService;
-import services.impl.EmployeeServiceImpl;
-import services.itf.FacilityService;
 
 import java.time.format.DateTimeParseException;
 import java.util.*;
@@ -60,6 +54,17 @@ public class FuramaController {
     // BOOKING
     public static BookingService bookingService = new BookingServiceImpl();
     public static Set<Booking> bookings = bookingService.display();
+    public static Map<Integer, String> bookingMap = new TreeMap<>();
+
+    static {
+        for (Booking booking : bookings) {
+            bookingMap.put(booking.getBookingID(), booking.getServiceID());
+        }
+    }
+
+    // CONTRACT
+    public static ContractService contractService = new ContractServiceImpl();
+    public static Queue<Contract> contracts = contractService.display();
 
 
     public static void main(String[] args) {
@@ -151,7 +156,7 @@ public class FuramaController {
 
     // CÁC METHOD ĐƯỢC GỌI TỪ MENU EMPLOYEE
     private static void displayEmployees() {
-        if (employees.size() == 0) {
+        if (employees == null) {
             System.out.println("List of employees is empty");
         } else {
             for (Employee employee : employees) {
@@ -272,7 +277,7 @@ public class FuramaController {
 
     // CÁC METHOD ĐƯỢC GỌI TỪ MENU CUSTOMER
     private static void displayCustomer() {
-        if (customers.size() == 0) {
+        if (customers == null) {
             System.out.println("List of customers is empty");
         } else {
             for (Customer customer : customers) {
@@ -388,7 +393,7 @@ public class FuramaController {
 
     // CÁC METHOD ĐƯỢC GỌI TỪ MENU FACILITY
     private static void displayFacility() {
-        if (facilities.size() == 0) {
+        if (facilities == null) {
             System.out.println("List of facility is empty");
         } else {
             for (Map.Entry<Facility, Integer> entry : facilities.entrySet()) {
@@ -561,7 +566,7 @@ public class FuramaController {
     private static void displayFacilityMaintenance() {
         Map<Facility, Integer> maintenances = facilityService.displayMaintenance();
 
-        if (maintenances.size() == 0) {
+        if (maintenances == null) {
             System.out.println("List of maintenance is empty");
         } else {
             for (Map.Entry<Facility, Integer> entry : maintenances.entrySet()) {
@@ -617,7 +622,6 @@ public class FuramaController {
     // CÁC METHOD ĐƯỢC GỌI TỪ MENU FACILITY
     private static void addBooking() {
         Booking booking = new Booking();
-        /*bookingService.add(booking);*/
 
         int customerID;
         do {
@@ -670,6 +674,9 @@ public class FuramaController {
         String serviceType = scanner.nextLine();
         booking.setServiceType(serviceType);
 
+        bookingService.add(booking);
+        bookings = bookingService.display();
+
         // Update Map Facility
         for (Map.Entry<Facility, Integer> entry : facilities.entrySet()) {
             if (entry.getKey().getServiceID().equals(serviceID)) {
@@ -682,12 +689,47 @@ public class FuramaController {
     }
 
     private static void displayBooking() {
+        if (bookings == null) {
+            System.out.println("List of booking is empty");
+        } else {
+            for (Booking booking : bookings) {
+                System.out.println(booking);
+            }
+        }
     }
 
     private static void creatContract() {
+
+        int id;
+        boolean testID;
+        do {
+            while (true) {
+                try {
+                    System.out.println("Input booking ID to make contract");
+                    id = Integer.parseInt(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("ID is a number");
+                }
+            }
+            testID = MyUtil.checkBookingID(id, bookingMap);
+        } while (testID);
+
+
+
+
+
+
     }
 
     private static void displayContract() {
+        if (contracts == null) {
+            System.out.println("List of contract is empty");
+        } else {
+            for (Contract contract : contracts) {
+                System.out.println(contract);
+            }
+        }
     }
 
     private static void editContract() {

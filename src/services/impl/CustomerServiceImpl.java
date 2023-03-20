@@ -13,7 +13,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     static {
         try {
-            customerList = CustomerData.readCustomerFile();
+            customerList = CustomerData.readFile();
         } catch (IOException e) {
             System.out.println("File is not exist");
         }
@@ -22,7 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> display() {
         try {
-            customerList = CustomerData.readCustomerFile();
+            customerList = CustomerData.readFile();
             return customerList;
         } catch (IOException e) {
             System.out.println("File is not exist");
@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void add(Customer customer) {
         try {
-            CustomerData.writeCustomerFile(customer);
+            CustomerData.writeFile(customer);
         } catch (IOException e) {
             System.out.println("File is not exist");
         }
@@ -53,9 +53,9 @@ public class CustomerServiceImpl implements CustomerService {
         customerList.set(i, customer);
 
         try {
-            CustomerData.clearCustomerData();
+            CustomerData.clear();
             for (Customer c : customerList) {
-                CustomerData.writeCustomerFile(c);
+                CustomerData.writeFile(c);
             }
         } catch (IOException e) {
             System.out.println("File is not exist");

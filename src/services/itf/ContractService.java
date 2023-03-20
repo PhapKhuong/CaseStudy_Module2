@@ -2,13 +2,13 @@ package services.itf;
 
 import models.Contract;
 
-import java.util.List;
+import java.util.Queue;
 
 public interface ContractService extends Service {
 
     void add(Contract contract);
 
-    List<Contract> display();
+    Queue<Contract> display();
 
-    void edit(int id);
+    void edit(int id, Contract contract);
 }

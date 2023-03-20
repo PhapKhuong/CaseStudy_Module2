@@ -50,19 +50,11 @@ public class MyUtil {
     }
 
     public static boolean checkID(int id, List<Integer> ids) {
-        if (ids.contains(id)) {
-            return true;
-        } else {
-            return false;
-        }
+        return ids.contains(id);
     }
 
     public static boolean checkStr(String str, List<String> strList) {
-        if (strList.contains(str)) {
-            return true;
-        } else {
-            return false;
-        }
+        return strList.contains(str);
     }
 
     public static void editEmployeeByID(Employee employee) {
@@ -549,5 +541,18 @@ public class MyUtil {
         } while (!testStandard);
 
         return standard;
+    }
+
+    public static boolean checkBookingID(int id, Map<Integer, String> map) {
+        for (Map.Entry<Integer, String> entry : map.entrySet()) {
+            boolean isVilla = entry.getValue().matches(MyRegex.REGEX_VILLA_ID);
+            boolean isHouse = entry.getValue().matches(MyRegex.REGEX_HOUSE_ID);
+            boolean check = isVilla || isHouse;
+
+            if (entry.getKey() == id && check) {
+                return true;
+            }
+        }
+        return false;
     }
 }

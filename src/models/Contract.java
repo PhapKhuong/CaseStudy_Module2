@@ -2,20 +2,20 @@ package models;
 
 public class Contract {
     private int contractID;
-    private int contractBookingID;
+    private int bookingID;
     private long deposits;
     private long payment;
-    private int contractCustomerID;
+    private int customerID;
 
     public Contract() {
     }
 
-    public Contract(int contractID, int contractBookingID, long deposits, long payment, int contractCustomerID) {
+    public Contract(int contractID, int bookingID, long deposits, long payment, int contractCustomerID) {
         this.contractID = contractID;
-        this.contractBookingID = contractBookingID;
+        this.bookingID = bookingID;
         this.deposits = deposits;
         this.payment = payment;
-        this.contractCustomerID = contractCustomerID;
+        this.customerID = customerID;
     }
 
     public int getContractID() {
@@ -26,12 +26,12 @@ public class Contract {
         this.contractID = contractID;
     }
 
-    public int getContractBookingID() {
-        return contractBookingID;
+    public int getBookingID() {
+        return bookingID;
     }
 
-    public void setContractBookingID(int contractBookingID) {
-        this.contractBookingID = contractBookingID;
+    public void setBookingID(int contractBookingID) {
+        this.bookingID = contractBookingID;
     }
 
     public long getDeposits() {
@@ -50,22 +50,22 @@ public class Contract {
         this.payment = payment;
     }
 
-    public int getContractCustomerID() {
-        return contractCustomerID;
+    public int getCustomerID() {
+        return customerID;
     }
 
-    public void setContractCustomerID(int contractCustomerID) {
-        this.contractCustomerID = contractCustomerID;
+    public void setCustomerID(int contractCustomerID) {
+        this.customerID = contractCustomerID;
     }
 
     @Override
     public String toString() {
         return "Contract{" +
                 "contractID=" + contractID +
-                ", contractBookingID=" + contractBookingID +
+                ", bookingID=" + bookingID +
                 ", deposits=" + deposits +
                 ", payment=" + payment +
-                ", contractCustomerID=" + contractCustomerID +
+                ", customerID=" + customerID +
                 '}';
     }
 }

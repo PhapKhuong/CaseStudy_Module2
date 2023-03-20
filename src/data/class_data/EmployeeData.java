@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeData {
-    public static final String EMPLOYEE_PATH =
+    private static final String EMPLOYEE_PATH =
             "C:\\Dropbox\\Codegym\\FuramaResort\\src\\data\\csv_file\\employee.csv";
 
     private EmployeeData() {
     }
 
-    public static List<Employee> readEmployeeFile() throws IOException {
+    public static List<Employee> readFile() throws IOException {
         FileReader fileReader = new FileReader(EMPLOYEE_PATH);
         BufferedReader buffReader = new BufferedReader(fileReader);
 
@@ -47,7 +47,7 @@ public class EmployeeData {
         return employeeDataList;
     }
 
-    public static void writeEmployeeFile(Employee employee) throws IOException {
+    public static void writeFile(Employee employee) throws IOException {
         FileWriter fileWriter = new FileWriter(EMPLOYEE_PATH, true);
         BufferedWriter buffWriter = new BufferedWriter(fileWriter);
 
@@ -66,7 +66,7 @@ public class EmployeeData {
         buffWriter.close();
     }
 
-    public static void clearEmployeeData() throws IOException {
+    public static void clear() throws IOException {
         FileWriter fileWriter = new FileWriter(EMPLOYEE_PATH);
         BufferedWriter buffWriter = new BufferedWriter(fileWriter);
         buffWriter.flush();

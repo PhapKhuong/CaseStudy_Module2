@@ -7,13 +7,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CustomerData {
-    public static final String CUSTOMER_PATH =
+    private static final String CUSTOMER_PATH =
             "C:\\Dropbox\\Codegym\\FuramaResort\\src\\data\\csv_file\\customer.csv";
 
     private CustomerData() {
     }
 
-    public static List<Customer> readCustomerFile() throws IOException {
+    public static List<Customer> readFile() throws IOException {
         FileReader fileReader = new FileReader(CUSTOMER_PATH);
         BufferedReader buffReader = new BufferedReader(fileReader);
 
@@ -46,7 +46,7 @@ public class CustomerData {
         return customerDataList;
     }
 
-    public static void writeCustomerFile(Customer customer) throws IOException {
+    public static void writeFile(Customer customer) throws IOException {
         FileWriter fileWriter = new FileWriter(CUSTOMER_PATH, true);
         BufferedWriter buffWriter = new BufferedWriter(fileWriter);
 
@@ -64,7 +64,7 @@ public class CustomerData {
         buffWriter.close();
     }
 
-    public static void clearCustomerData() throws IOException {
+    public static void clear() throws IOException {
         FileWriter fileWriter = new FileWriter(CUSTOMER_PATH);
         BufferedWriter buffWriter = new BufferedWriter(fileWriter);
         buffWriter.flush();
