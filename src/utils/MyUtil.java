@@ -2,10 +2,10 @@ package utils;
 
 import libs.DateOfBirthException;
 import libs.MyRegex;
+import models.Contract;
 import models.Customer;
 import models.Employee;
 import models.Facility;
-import sun.util.resources.LocaleData;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +13,9 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import static controllers.FuramaController.bookingMap;
+import static controllers.FuramaController.customers;
 
 public class MyUtil {
     public static Scanner scanner = new Scanner(System.in);
@@ -33,20 +36,20 @@ public class MyUtil {
         }
     }
 
-    public static long inputSalary() {
-        long salary;
+    public static long inputLong() {
+        long number;
         do {
             while (true) {
                 try {
-                    System.out.println("Input salary");
-                    salary = Long.parseLong(scanner.nextLine());
+                    System.out.println("Input number");
+                    number = Long.parseLong(scanner.nextLine());
                     break;
                 } catch (NumberFormatException e) {
                     System.out.println("Salary must be a number!");
                 }
             }
-        } while (salary <= 0);
-        return salary;
+        } while (number <= 0);
+        return number;
     }
 
     public static boolean checkID(int id, List<Integer> ids) {
@@ -129,7 +132,7 @@ public class MyUtil {
                     employee.setPosition(position);
                     break;
                 case 9:
-                    long salary = MyUtil.inputSalary();
+                    long salary = MyUtil.inputLong();
                     employee.setSalary(salary);
                     break;
                 case 10:
@@ -137,6 +140,65 @@ public class MyUtil {
             }
         }
         while (select < 10);
+    }
+
+    public static void editContractByID(Contract contract) {
+        int select = 0;
+        do {
+            System.out.println("1. Booking ID");
+            System.out.println("2. Deposits");
+            System.out.println("3. Payment");
+            System.out.println("4. Customer ID");
+            System.out.println("5. Finish");
+
+            try {
+                System.out.println("Select the information to edit");
+                select = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Select from 1 to 5");
+            }
+
+            switch (select) {
+                case 1:
+                    int bookingID;
+                    boolean test;
+                    do {
+                        while (true) {
+                            try {
+                                System.out.println("Input booking ID to make contract");
+                                bookingID = Integer.parseInt(scanner.nextLine());
+                                break;
+                            } catch (NumberFormatException e) {
+                                System.out.println("ID is a number");
+                            }
+                        }
+                        test = MyUtil.checkBookingID(bookingID, bookingMap);
+                    } while (test);
+                    contract.setBookingID(bookingID);
+                    break;
+                case 2:
+                    System.out.println("Input deposits");
+                    long deposits = MyUtil.inputLong();
+                    contract.setDeposits(deposits);
+                    break;
+                case 3:
+                    System.out.println("Input payment");
+                    long payment = MyUtil.inputLong();
+                    contract.setPayment(payment);
+                    break;
+                case 4:
+                    int customerID;
+                    do {
+                        customerID = MyUtil.selectID(customers);
+                    }
+                    while (customerID == -1);
+                    contract.setCustomerID(customerID);
+                    break;
+                case 5:
+                    break;
+            }
+        }
+        while (select < 5);
     }
 
     public static void editCustomerByID(Customer customer) {
@@ -442,15 +504,6 @@ public class MyUtil {
         } while (exit == 2);
 
         return select;
-    }
-
-    public static Facility getFacility(String name, Map<Facility, Integer> facilities) {
-        for (Facility key : facilities.keySet()) {
-            if (key.getServiceName().equals(name)) {
-                return key;
-            }
-        }
-        return null;
     }
 
     public static LocalDate parseDate(String str) {

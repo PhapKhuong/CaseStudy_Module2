@@ -44,9 +44,6 @@ public class FuramaController {
     static {
         for (Facility key : facilities.keySet()) {
             facilityNames.add(key.getServiceName());
-        }
-
-        for (Facility key : facilities.keySet()) {
             facilityIDs.add(key.getServiceID());
         }
     }
@@ -55,17 +52,25 @@ public class FuramaController {
     public static BookingService bookingService = new BookingServiceImpl();
     public static Set<Booking> bookings = bookingService.display();
     public static Map<Integer, String> bookingMap = new TreeMap<>();
+    public static List<Integer> bookingIDs = new ArrayList<>();
 
     static {
         for (Booking booking : bookings) {
             bookingMap.put(booking.getBookingID(), booking.getServiceID());
+            bookingIDs.add(booking.getBookingID());
         }
     }
 
     // CONTRACT
     public static ContractService contractService = new ContractServiceImpl();
     public static Queue<Contract> contracts = contractService.display();
+    public static List<Integer> contractIDs = new ArrayList<>();
 
+    static {
+        for (Contract contract : contracts) {
+            contractIDs.add(contract.getContractID());
+        }
+    }
 
     public static void main(String[] args) {
         displayMainMenu();
@@ -156,7 +161,7 @@ public class FuramaController {
 
     // CÁC METHOD ĐƯỢC GỌI TỪ MENU EMPLOYEE
     private static void displayEmployees() {
-        if (employees == null) {
+        if (employees.size() == 0) {
             System.out.println("List of employees is empty");
         } else {
             for (Employee employee : employees) {
@@ -216,7 +221,7 @@ public class FuramaController {
         employee.setPosition(position);
 
         long salary;
-        salary = MyUtil.inputSalary();
+        salary = MyUtil.inputLong();
         employee.setSalary(salary);
 
         employeeService.add(employee);
@@ -277,7 +282,7 @@ public class FuramaController {
 
     // CÁC METHOD ĐƯỢC GỌI TỪ MENU CUSTOMER
     private static void displayCustomer() {
-        if (customers == null) {
+        if (customers.size() == 0) {
             System.out.println("List of customers is empty");
         } else {
             for (Customer customer : customers) {
@@ -393,7 +398,7 @@ public class FuramaController {
 
     // CÁC METHOD ĐƯỢC GỌI TỪ MENU FACILITY
     private static void displayFacility() {
-        if (facilities == null) {
+        if (facilities.size() == 0) {
             System.out.println("List of facility is empty");
         } else {
             for (Map.Entry<Facility, Integer> entry : facilities.entrySet()) {
@@ -630,12 +635,17 @@ public class FuramaController {
         while (customerID == -1);
         booking.setCustomerID(customerID);
 
-        int id = MyUtil.inputInt();
+        int id;
+        boolean test;
+        do {
+            id = MyUtil.inputInt();
+            test = MyUtil.checkID(id, bookingIDs);
+        }while (test);
         booking.setBookingID(id);
 
         while (true) {
             try {
-                System.out.println("Enter begin date (dd/MM/yyyy");
+                System.out.println("Enter begin date (dd/MM/yyyy)");
                 String beginDate = scanner.nextLine();
                 booking.setBeginDate(beginDate);
                 break;
@@ -646,7 +656,7 @@ public class FuramaController {
 
         while (true) {
             try {
-                System.out.println("Enter finish date (dd/MM/yyyy");
+                System.out.println("Enter finish date (dd/MM/yyyy)");
                 String finishDate = scanner.nextLine();
                 booking.setFinishDate(finishDate);
                 break;
@@ -676,20 +686,21 @@ public class FuramaController {
 
         bookingService.add(booking);
         bookings = bookingService.display();
+        bookingMap.put(id, serviceID);
 
         // Update Map Facility
         for (Map.Entry<Facility, Integer> entry : facilities.entrySet()) {
             if (entry.getKey().getServiceID().equals(serviceID)) {
                 int value = entry.getValue() + 1;
                 facilityService.update(entry.getKey(), value);
-                facilityService.display();
+                facilities = facilityService.display();
                 break;
             }
         }
     }
 
     private static void displayBooking() {
-        if (bookings == null) {
+        if (bookings.size() == 0) {
             System.out.println("List of booking is empty");
         } else {
             for (Booking booking : bookings) {
@@ -699,31 +710,46 @@ public class FuramaController {
     }
 
     private static void creatContract() {
-
-        int id;
-        boolean testID;
+        int bookingID;
+        boolean test;
         do {
             while (true) {
                 try {
                     System.out.println("Input booking ID to make contract");
-                    id = Integer.parseInt(scanner.nextLine());
+                    bookingID = Integer.parseInt(scanner.nextLine());
                     break;
                 } catch (NumberFormatException e) {
                     System.out.println("ID is a number");
                 }
             }
-            testID = MyUtil.checkBookingID(id, bookingMap);
-        } while (testID);
+            test = MyUtil.checkBookingID(bookingID, bookingMap);
+        } while (test);
 
+        int contractID;
+        do {
+            contractID = MyUtil.inputInt();
+        } while (MyUtil.checkID(contractID, contractIDs));
 
+        System.out.println("Input deposits");
+        long deposits = MyUtil.inputLong();
 
+        System.out.println("Input payment");
+        long payment = MyUtil.inputLong();
 
+        int customerID;
+        do {
+            customerID = MyUtil.selectID(customers);
+        }
+        while (customerID == -1);
 
-
+        Contract contract = new Contract(contractID, bookingID, deposits, payment, customerID);
+        contractService.add(contract);
+        contracts = contractService.display();
+        contractIDs.add(contractID);
     }
 
     private static void displayContract() {
-        if (contracts == null) {
+        if (contracts.size() == 0) {
             System.out.println("List of contract is empty");
         } else {
             for (Contract contract : contracts) {
@@ -733,6 +759,22 @@ public class FuramaController {
     }
 
     private static void editContract() {
+        System.out.println("Enter contract ID");
+        int id = MyUtil.inputInt();
+        boolean test = MyUtil.checkID(id, contractIDs);
+
+        if (test) {
+            for (Contract contract : contracts) {
+                if (contract.getContractID() == id) {
+                    MyUtil.editContractByID(contract);
+                    contractService.edit(id, contract);
+                    contracts = contractService.display();
+                }
+                break;
+            }
+        } else {
+            System.out.println("This customer is not exist!");
+        }
     }
 
 

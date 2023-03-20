@@ -88,8 +88,8 @@ public class Booking {
     public String toString() {
         return "Booking{" +
                 "bookingID=" + bookingID +
-                ", beginDate=" + beginDate +
-                ", finishDate=" + finishDate +
+                ", beginDate=" + this.getBeginDate() +
+                ", finishDate=" + this.getFinishDate() +
                 ", customerID=" + customerID +
                 ", serviceName='" + serviceName + '\'' +
                 ", serviceType='" + serviceType + '\'' +

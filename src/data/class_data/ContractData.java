@@ -7,7 +7,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class ContractData {
-    public static final String CONTRACT_PATH = "C:\\Dropbox\\Codegym\\FuramaResort\\src\\data\\csv_file\\contract.csv";
+    public static final String CONTRACT_PATH =
+            "C:\\Dropbox\\Codegym\\FuramaResort\\src\\data\\csv_file\\contract.csv";
 
     private ContractData() {
     }
@@ -40,7 +41,7 @@ public class ContractData {
     }
 
     public static void writeFile(Contract contract) throws IOException {
-        FileWriter fileWriter = new FileWriter(CONTRACT_PATH);
+        FileWriter fileWriter = new FileWriter(CONTRACT_PATH, true);
         BufferedWriter buffWriter = new BufferedWriter(fileWriter);
 
         buffWriter.write(
@@ -53,7 +54,7 @@ public class ContractData {
         buffWriter.close();
     }
 
-    public static void clear() throws IOException{
+    public static void clear() throws IOException {
         FileWriter fileWriter = new FileWriter(CONTRACT_PATH);
         BufferedWriter buffWriter = new BufferedWriter(fileWriter);
 

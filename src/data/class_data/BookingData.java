@@ -8,7 +8,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class BookingData {
-    public static final String BOOKING_PATH = "C:\\Dropbox\\Codegym\\FuramaResort\\src\\data\\csv_file\\booking.csv";
+    public static final String BOOKING_PATH =
+            "C:\\Dropbox\\Codegym\\FuramaResort\\src\\data\\csv_file\\booking.csv";
 
     private BookingData() {
     }
@@ -46,7 +47,7 @@ public class BookingData {
     }
 
     public static void writeFile(Booking booking) throws IOException {
-        FileWriter fileWriter = new FileWriter(BOOKING_PATH);
+        FileWriter fileWriter = new FileWriter(BOOKING_PATH, true);
         BufferedWriter buffWriter = new BufferedWriter(fileWriter);
 
         buffWriter.write(
