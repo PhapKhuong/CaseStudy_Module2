@@ -640,7 +640,7 @@ public class FuramaController {
         do {
             id = MyUtil.inputInt();
             test = MyUtil.checkID(id, bookingIDs);
-        }while (test);
+        } while (test);
         booking.setBookingID(id);
 
         while (true) {
@@ -723,7 +723,10 @@ public class FuramaController {
                 }
             }
             test = MyUtil.checkBookingID(bookingID, bookingMap);
-        } while (test);
+            if (!test) {
+                System.out.println("This booking doesn't require a contract");
+            }
+        } while (!test);
 
         int contractID;
         do {
@@ -736,11 +739,13 @@ public class FuramaController {
         System.out.println("Input payment");
         long payment = MyUtil.inputLong();
 
-        int customerID;
-        do {
-            customerID = MyUtil.selectID(customers);
+        int customerID = 0;
+        for (Booking booking : bookings) {
+            if (booking.getBookingID() == bookingID) {
+                customerID = booking.getCustomerID();
+                break;
+            }
         }
-        while (customerID == -1);
 
         Contract contract = new Contract(contractID, bookingID, deposits, payment, customerID);
         contractService.add(contract);

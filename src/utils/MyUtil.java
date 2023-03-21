@@ -2,10 +2,7 @@ package utils;
 
 import libs.DateOfBirthException;
 import libs.MyRegex;
-import models.Contract;
-import models.Customer;
-import models.Employee;
-import models.Facility;
+import models.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -15,7 +12,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import static controllers.FuramaController.bookingMap;
-import static controllers.FuramaController.customers;
+import static controllers.FuramaController.bookings;
 
 public class MyUtil {
     public static Scanner scanner = new Scanner(System.in);
@@ -148,8 +145,7 @@ public class MyUtil {
             System.out.println("1. Booking ID");
             System.out.println("2. Deposits");
             System.out.println("3. Payment");
-            System.out.println("4. Customer ID");
-            System.out.println("5. Finish");
+            System.out.println("4. Finish");
 
             try {
                 System.out.println("Select the information to edit");
@@ -173,8 +169,21 @@ public class MyUtil {
                             }
                         }
                         test = MyUtil.checkBookingID(bookingID, bookingMap);
-                    } while (test);
+                        if (!test) {
+                            System.out.println("This booking doesn't require to contract");
+                        }
+                    } while (!test);
+
+                    int customerID = 0;
+                    for (Booking booking : bookings) {
+                        if (booking.getBookingID() == bookingID) {
+                            customerID = booking.getCustomerID();
+                            break;
+                        }
+                    }
+
                     contract.setBookingID(bookingID);
+                    contract.setCustomerID(customerID);
                     break;
                 case 2:
                     System.out.println("Input deposits");
@@ -187,18 +196,10 @@ public class MyUtil {
                     contract.setPayment(payment);
                     break;
                 case 4:
-                    int customerID;
-                    do {
-                        customerID = MyUtil.selectID(customers);
-                    }
-                    while (customerID == -1);
-                    contract.setCustomerID(customerID);
-                    break;
-                case 5:
                     break;
             }
         }
-        while (select < 5);
+        while (select < 4);
     }
 
     public static void editCustomerByID(Customer customer) {

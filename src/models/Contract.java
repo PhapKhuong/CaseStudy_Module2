@@ -10,7 +10,7 @@ public class Contract {
     public Contract() {
     }
 
-    public Contract(int contractID, int bookingID, long deposits, long payment, int contractCustomerID) {
+    public Contract(int contractID, int bookingID, long deposits, long payment, int customerID) {
         this.contractID = contractID;
         this.bookingID = bookingID;
         this.deposits = deposits;
