@@ -72,6 +72,10 @@ public class FuramaController {
         }
     }
 
+    // PROMOTION
+    public static PromotionService promotionService = new PromotionServiceImpl();
+
+
     public static void main(String[] args) {
         displayMainMenu();
     }
@@ -816,8 +820,68 @@ public class FuramaController {
 
     // CÁC METHOD ĐƯỢC GỌI TỪ MENU PROMOTION
     private static void displayCustomerUseService() {
+        System.out.println("Enter year to make list of customer");
+        int year = MyUtil.inputInt();
+
+        Set<Integer> customerIdSet = promotionService.displayListUseService(year);
+
+        for (Integer i : customerIdSet) {
+            for (Customer customer : customers) {
+                if (customer.getCustomerID() == i) {
+                    System.out.println(customer);
+                    break;
+                }
+            }
+        }
     }
 
     private static void displayCustomerGetVoucher() {
+        Stack<Integer> customerIdSet = promotionService.displayListGetVoucher();
+        int size = customerIdSet.size();
+
+        int num1;
+        int num2;
+        int num3;
+        do {
+            System.out.println("Input voucher 10%");
+            num1 = MyUtil.inputInt();
+            System.out.println("Input voucher 20%");
+            num2 = MyUtil.inputInt();
+            System.out.println("Input voucher 50%");
+            num3 = MyUtil.inputInt();
+        } while (num1 + num2 + num3 != size);
+
+        System.out.println("List of customer get 10% voucher");
+        for (int i = 0; i < num1; i++) {
+            int id = customerIdSet.pop();
+            for (Customer customer : customers) {
+                if (customer.getCustomerID() == id) {
+                    System.out.println(customer);
+                    break;
+                }
+            }
+        }
+
+        System.out.println("List of customer get 20% voucher");
+        for (int i = 0; i < num2; i++) {
+            int id = customerIdSet.pop();
+            for (Customer customer : customers) {
+                if (customer.getCustomerID() == id) {
+                    System.out.println(customer);
+                    break;
+                }
+            }
+        }
+
+        System.out.println("List of customer get 50% voucher");
+        for (int i = 0; i < num3; i++) {
+            int id = customerIdSet.pop();
+            for (Customer customer : customers) {
+                if (customer.getCustomerID() == id) {
+                    System.out.println(customer);
+                    break;
+                }
+            }
+        }
     }
 }
